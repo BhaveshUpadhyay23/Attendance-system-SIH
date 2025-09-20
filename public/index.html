@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active">
+            <div class="container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1><i class="fas fa-graduation-cap"></i> School Management System</h1>
+                        <p>Sign in to your account</p>
+                    </div>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername">Username or Email</label>
+                            <input type="text" id="loginUsername" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                    </form>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
+                        <div class="demo-accounts">
+                            <h4>Demo Accounts:</h4>
+                            <p><strong>Admin:</strong> admin / admin123</p>
+                            <p><strong>Teacher:</strong> teacher / teacher123</p>
+                            <p><strong>Student:</strong> student / student123</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Page -->
+        <div id="signupPage" class="page">
+            <div class="container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1><i class="fas fa-user-plus"></i> Create Account</h1>
+                        <p>Join our school management system</p>
+                    </div>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupUsername">Username</label>
+                            <input type="text" id="signupUsername" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupFirstName">First Name</label>
+                            <input type="text" id="signupFirstName" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupLastName">Last Name</label>
+                            <input type="text" id="signupLastName" name="last_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupRole">Role</label>
+                            <select id="signupRole" name="role" required>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </form>
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" id="showLogin">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Dashboard -->
+        <div id="studentDashboard" class="page">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Student Dashboard</span>
+                </div>
+                <div class="nav-user">
+                    <span id="studentUserInfo"></span>
+                    <button id="studentLogoutBtn" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </nav>
+
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Welcome, <span id="studentName"></span></h1>
+                    <div class="date-info">
+                        <i class="fas fa-calendar"></i>
+                        <span id="studentCurrentDate"></span>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-card" onclick="showStudentSection('attendance')">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Mark Attendance</span>
+                    </button>
+                    <button class="action-card" onclick="showStudentSection('materials')">
+                        <i class="fas fa-book"></i>
+                        <span>Study Materials</span>
+                    </button>
+                    <button class="action-card" onclick="showStudentSection('class')">
+                        <i class="fas fa-users"></i>
+                        <span>My Class</span>
+                    </button>
+                    <button class="action-card" onclick="showStudentSection('events')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Events & Exams</span>
+                    </button>
+                    <button class="action-card" onclick="showStudentSection('marks')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Exam Reports</span>
+                    </button>
+                    <button class="action-card" onclick="showStudentSection('notices')">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Notices</span>
+                    </button>
+                </div>
+
+                <!-- Student Content Sections -->
+                <div id="studentContent">
+                    <!-- Attendance Section -->
+                    <div id="attendanceSection" class="content-section active">
+                        <div class="attendance-card">
+                            <div class="attendance-status">
+                                <div class="status-icon">
+                                    <i id="studentStatusIcon" class="fas fa-clock"></i>
+                                </div>
+                                <div class="status-info">
+                                    <h3 id="studentStatusTitle">Ready to Check In</h3>
+                                    <p id="studentStatusMessage">Click the button below to mark your attendance</p>
+                                </div>
+                            </div>
+                            <div class="attendance-actions">
+                                <button id="studentCheckInBtn" class="btn btn-success">
+                                    <i class="fas fa-sign-in-alt"></i> Check In
+                                </button>
+                                <button id="studentCheckOutBtn" class="btn btn-warning" disabled>
+                                    <i class="fas fa-sign-out-alt"></i> Check Out
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="attendance-info">
+                            <h3>Today's Attendance</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <div>
+                                        <span class="label">Check In</span>
+                                        <span id="studentCheckInTime" class="value">--:--</span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <div>
+                                        <span class="label">Check Out</span>
+                                        <span id="studentCheckOutTime" class="value">--:--</span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <span class="label">Hours Worked</span>
+                                        <span id="studentHoursWorked" class="value">--:--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Study Materials Section -->
+                    <div id="materialsSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Study Materials</h2>
+                        </div>
+                        <div id="studyMaterialsList" class="materials-grid">
+                            <!-- Study materials will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Class Section -->
+                    <div id="classSection" class="content-section">
+                        <div class="section-header">
+                            <h2>My Class</h2>
+                        </div>
+                        <div id="classInfo" class="class-info">
+                            <!-- Class information will be loaded here -->
+                        </div>
+                        <div id="classStudentsList" class="students-grid">
+                            <!-- Class students will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Events Section -->
+                    <div id="eventsSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Upcoming Events & Exams</h2>
+                        </div>
+                        <div id="eventsList" class="events-list">
+                            <!-- Events will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Marks Section -->
+                    <div id="marksSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Exam Reports</h2>
+                        </div>
+                        <div id="marksList" class="marks-table-container">
+                            <!-- Marks will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Notices Section -->
+                    <div id="noticesSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Notices</h2>
+                        </div>
+                        <div id="noticesList" class="notices-list">
+                            <!-- Notices will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Dashboard -->
+        <div id="teacherDashboard" class="page">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Teacher Dashboard</span>
+                </div>
+                <div class="nav-user">
+                    <span id="teacherUserInfo"></span>
+                    <button id="teacherLogoutBtn" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </nav>
+
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Welcome, <span id="teacherName"></span></h1>
+                    <div class="date-info">
+                        <i class="fas fa-calendar"></i>
+                        <span id="teacherCurrentDate"></span>
+                    </div>
+                </div>
+
+                <!-- Teacher Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-card" onclick="showTeacherSection('materials')">
+                        <i class="fas fa-upload"></i>
+                        <span>Upload Materials</span>
+                    </button>
+                    <button class="action-card" onclick="showTeacherSection('attendance')">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>View Attendance</span>
+                    </button>
+                    <button class="action-card" onclick="showTeacherSection('notices')">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Manage Notices</span>
+                    </button>
+                    <button class="action-card" onclick="showTeacherSection('marks')">
+                        <i class="fas fa-edit"></i>
+                        <span>Add Marks</span>
+                    </button>
+                    <button class="action-card" onclick="showTeacherSection('events')">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span>Create Events</span>
+                    </button>
+                    <button class="action-card" onclick="showTeacherSection('students')">
+                        <i class="fas fa-users"></i>
+                        <span>Class Students</span>
+                    </button>
+                </div>
+
+                <!-- Teacher Content Sections -->
+                <div id="teacherContent">
+                    <!-- Upload Materials Section -->
+                    <div id="teacherMaterialsSection" class="content-section active">
+                        <div class="section-header">
+                            <h2>Upload Study Materials</h2>
+                            <button class="btn btn-primary" onclick="showUploadMaterialForm()">
+                                <i class="fas fa-plus"></i> Upload New Material
+                            </button>
+                        </div>
+                        <div id="uploadMaterialForm" class="form-card" style="display: none;">
+                            <form id="materialUploadForm" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="materialTitle">Title *</label>
+                                    <input type="text" id="materialTitle" name="title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialDescription">Description</label>
+                                    <textarea id="materialDescription" name="description" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialFile">Upload File (PDF, DOC, DOCX, TXT, Images)</label>
+                                    <input type="file" id="materialFile" name="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif">
+                                    <small class="form-text">Maximum file size: 10MB</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialType">File Type (if no file uploaded)</label>
+                                    <select id="materialType" name="file_type">
+                                        <option value="document">Document</option>
+                                        <option value="pdf">PDF</option>
+                                        <option value="video">Video</option>
+                                        <option value="image">Image</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                    <button type="button" class="btn btn-outline" onclick="hideUploadMaterialForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="teacherMaterialsList" class="materials-grid">
+                            <!-- Materials will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Attendance Section -->
+                    <div id="teacherAttendanceSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Class Attendance</h2>
+                            <div class="date-filter">
+                                <input type="date" id="teacherStartDate" placeholder="Start Date">
+                                <input type="date" id="teacherEndDate" placeholder="End Date">
+                                <button id="teacherFilterBtn" class="btn btn-outline">
+                                    <i class="fas fa-filter"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                        <div id="teacherAttendanceTable" class="table-container">
+                            <!-- Attendance table will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Notices Section -->
+                    <div id="teacherNoticesSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Manage Notices</h2>
+                            <button class="btn btn-primary" onclick="showCreateNoticeForm()">
+                                <i class="fas fa-plus"></i> Create Notice
+                            </button>
+                        </div>
+                        <div id="createNoticeForm" class="form-card" style="display: none;">
+                            <form id="noticeCreateForm">
+                                <div class="form-group">
+                                    <label for="noticeTitle">Title</label>
+                                    <input type="text" id="noticeTitle" name="title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="noticeContent">Content</label>
+                                    <textarea id="noticeContent" name="content" rows="4" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="noticePriority">Priority</label>
+                                    <select id="noticePriority" name="priority">
+                                        <option value="normal">Normal</option>
+                                        <option value="high">High</option>
+                                        <option value="urgent">Urgent</option>
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Create Notice</button>
+                                    <button type="button" class="btn btn-outline" onclick="hideCreateNoticeForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="teacherNoticesList" class="notices-list">
+                            <!-- Notices will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Marks Section -->
+                    <div id="teacherMarksSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Add Student Marks</h2>
+                            <button class="btn btn-primary" onclick="showAddMarksForm()">
+                                <i class="fas fa-plus"></i> Add Marks
+                            </button>
+                        </div>
+                        <div id="addMarksForm" class="form-card" style="display: none;">
+                            <form id="marksAddForm">
+                                <div class="form-group">
+                                    <label for="marksStudent">Student</label>
+                                    <select id="marksStudent" name="student_id" required>
+                                        <!-- Students will be loaded here -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="marksSubject">Subject</label>
+                                    <input type="text" id="marksSubject" name="subject" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="marksExamType">Exam Type</label>
+                                    <select id="marksExamType" name="exam_type" required>
+                                        <option value="quiz">Quiz</option>
+                                        <option value="midterm">Midterm</option>
+                                        <option value="final">Final</option>
+                                        <option value="assignment">Assignment</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="marksObtained">Marks Obtained</label>
+                                        <input type="number" id="marksObtained" name="marks_obtained" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="marksTotal">Total Marks</label>
+                                        <input type="number" id="marksTotal" name="total_marks" required>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Add Marks</button>
+                                    <button type="button" class="btn btn-outline" onclick="hideAddMarksForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="teacherMarksTable" class="table-container">
+                            <!-- Marks table will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Events Section -->
+                    <div id="teacherEventsSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Create Events</h2>
+                            <button class="btn btn-primary" onclick="showCreateEventForm()">
+                                <i class="fas fa-plus"></i> Create Event
+                            </button>
+                        </div>
+                        <div id="createEventForm" class="form-card" style="display: none;">
+                            <form id="eventCreateForm">
+                                <div class="form-group">
+                                    <label for="eventTitle">Title</label>
+                                    <input type="text" id="eventTitle" name="title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventDescription">Description</label>
+                                    <textarea id="eventDescription" name="description" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventType">Event Type</label>
+                                    <select id="eventType" name="event_type">
+                                        <option value="event">Event</option>
+                                        <option value="exam">Exam</option>
+                                        <option value="assignment">Assignment</option>
+                                        <option value="holiday">Holiday</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="eventDate">Date</label>
+                                        <input type="date" id="eventDate" name="event_date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="eventTime">Time</label>
+                                        <input type="time" id="eventTime" name="event_time">
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Create Event</button>
+                                    <button type="button" class="btn btn-outline" onclick="hideCreateEventForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="teacherEventsList" class="events-list">
+                            <!-- Events will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Students Section -->
+                    <div id="teacherStudentsSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Class Students</h2>
+                        </div>
+                        <div id="teacherStudentsTable" class="table-container">
+                            <!-- Students table will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="page">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin Dashboard</span>
+                </div>
+                <div class="nav-user">
+                    <span id="adminUserInfo"></span>
+                    <button id="adminLogoutBtn" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </nav>
+
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Admin Panel</h1>
+                    <div class="date-info">
+                        <i class="fas fa-calendar"></i>
+                        <span id="adminCurrentDate"></span>
+                    </div>
+                </div>
+
+                <!-- Admin Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-card" onclick="showAdminSection('users')">
+                        <i class="fas fa-users"></i>
+                        <span>Manage Users</span>
+                    </button>
+                    <button class="action-card" onclick="showAdminSection('classes')">
+                        <i class="fas fa-chalkboard"></i>
+                        <span>Manage Classes</span>
+                    </button>
+                    <button class="action-card" onclick="showAdminSection('attendance')">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>View Attendance</span>
+                    </button>
+                    <button class="action-card" onclick="showAdminSection('reports')">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reports</span>
+                    </button>
+                </div>
+
+                <!-- Admin Content Sections -->
+                <div id="adminContent">
+                    <!-- Users Section -->
+                    <div id="adminUsersSection" class="content-section active">
+                        <div class="section-header">
+                            <h2>User Management</h2>
+                            <button class="btn btn-primary" onclick="showCreateUserForm()">
+                                <i class="fas fa-plus"></i> Add User
+                            </button>
+                        </div>
+                        <div id="createUserForm" class="form-card" style="display: none;">
+                            <form id="userCreateForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="userFirstName">First Name</label>
+                                        <input type="text" id="userFirstName" name="first_name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userLastName">Last Name</label>
+                                        <input type="text" id="userLastName" name="last_name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userUsername">Username</label>
+                                    <input type="text" id="userUsername" name="username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userEmail">Email</label>
+                                    <input type="email" id="userEmail" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userPassword">Password</label>
+                                    <input type="password" id="userPassword" name="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userRole">Role</label>
+                                    <select id="userRole" name="role" required>
+                                        <option value="student">Student</option>
+                                        <option value="teacher">Teacher</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userClass">Class</label>
+                                    <select id="userClass" name="class_id">
+                                        <!-- Classes will be loaded here -->
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Create User</button>
+                                    <button type="button" class="btn btn-outline" onclick="hideCreateUserForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="adminUsersTable" class="table-container">
+                            <!-- Users table will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Classes Section -->
+                    <div id="adminClassesSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Class Management</h2>
+                            <button class="btn btn-primary" onclick="showCreateClassForm()">
+                                <i class="fas fa-plus"></i> Add Class
+                            </button>
+                        </div>
+                        <div id="createClassForm" class="form-card" style="display: none;">
+                            <form id="classCreateForm">
+                                <div class="form-group">
+                                    <label for="className">Class Name</label>
+                                    <input type="text" id="className" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="classDescription">Description</label>
+                                    <textarea id="classDescription" name="description" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="classTeacher">Teacher</label>
+                                    <select id="classTeacher" name="teacher_id">
+                                        <!-- Teachers will be loaded here -->
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Create Class</button>
+                                    <button type="button" class="btn btn-outline" onclick="hideCreateClassForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="adminClassesTable" class="table-container">
+                            <!-- Classes table will be loaded here -->
+                        </div>
+                        
+                        <!-- Edit Class Modal -->
+                        <div id="editClassModal" class="modal" style="display: none;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3>Edit Class</h3>
+                                    <span class="close" onclick="closeEditClassModal()">&times;</span>
+                                </div>
+                                <form id="editClassForm">
+                                    <input type="hidden" id="editClassId" name="classId">
+                                    <div class="form-group">
+                                        <label for="editClassName">Class Name *</label>
+                                        <input type="text" id="editClassName" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editClassDescription">Description</label>
+                                        <textarea id="editClassDescription" name="description" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editClassTeacher">Teacher</label>
+                                        <select id="editClassTeacher" name="teacher_id">
+                                            <option value="">Select Teacher (Optional)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">Update Class</button>
+                                        <button type="button" class="btn btn-secondary" onclick="closeEditClassModal()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attendance Section -->
+                    <div id="adminAttendanceSection" class="content-section">
+                        <div class="section-header">
+                            <h2>Attendance Overview</h2>
+                            <div class="date-filter">
+                                <input type="date" id="adminStartDate" placeholder="Start Date">
+                                <input type="date" id="adminEndDate" placeholder="End Date">
+                                <button id="adminFilterBtn" class="btn btn-outline">
+                                    <i class="fas fa-filter"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                        <div id="adminAttendanceTable" class="table-container">
+                            <!-- Attendance table will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Reports Section -->
+                    <div id="adminReportsSection" class="content-section">
+                        <div class="section-header">
+                            <h2>System Reports</h2>
+                        </div>
+                        <div class="reports-grid">
+                            <div class="report-card">
+                                <h3>Total Users</h3>
+                                <div class="report-number" id="totalUsers">0</div>
+                            </div>
+                            <div class="report-card">
+                                <h3>Total Classes</h3>
+                                <div class="report-number" id="totalClasses">0</div>
+                            </div>
+                            <div class="report-card">
+                                <h3>Today's Attendance</h3>
+                                <div class="report-number" id="todayAttendance">0</div>
+                            </div>
+                            <div class="report-card">
+                                <h3>Active Students</h3>
+                                <div class="report-number" id="activeStudents">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
