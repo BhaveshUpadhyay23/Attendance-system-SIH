@@ -10,7 +10,7 @@ const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = 'your-secret-key-change-in-production';
+const JWT_SECRET = '';
 
 // Middleware
 app.use(cors());
