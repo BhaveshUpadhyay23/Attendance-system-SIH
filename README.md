@@ -126,7 +126,3 @@ To run in development mode with auto-restart:
 ```bash
 npm run dev
 ```
-
-## License
-
-MIT License - feel free to use this project for personal or commercial purposes.
